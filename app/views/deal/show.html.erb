@@ -1,0 +1,96 @@
+﻿<%= stylesheet_link_tag 'reviews'%>
+<body>
+  <div class="row unit-block">
+    <div class="span9 unit-bg">
+      <div class="unit">
+        <% if @deal.present? %>
+          <div class="unit-bg" >
+          <%=image_tag(@deal.image)%>
+          </div>
+          <div class="row page-content">
+            <div class="span3">
+              <div class="thumbnail unit-bg" >
+                <ul class="unstyled">
+                  <li><span class="text-highlight-large">$<%=@deal.current_amount %></span></li>
+                  <li>
+                   <% if current_user %>
+                    <%= render partial: "shared/payment", locals: { deal: @deal } %>
+                   <% else %>
+                    <%= link_to "Signin to Buy", new_user_session_path %>
+                   <% end %>
+                  <li>&nbsp;
+                  </li>
+                  <li>
+                  <table class="table">
+                   <tr class="firstrow">
+                   <td>
+                   Savings
+                   </td>
+                   <td>
+                    <strong>$<%= @deal.previous_amount - @deal.current_amount %> </strong>
+                   </td>
+                    </tr>
+                    <tr>
+                    <td>
+                    Purchased
+                    </td>
+                    <% if @deal.sold_coupons.present? %>
+                    <td>
+                    <%=@deal.sold_coupons%>
+                    </td>
+                    <% else %>
+                    <td>
+                    0
+                    </td>
+                    <% end %>
+                    </tr>
+                    <tr>
+                    <td>
+                    Remaining
+                    </td>
+                    <td>
+                    <%=@deal.available_coupons%>
+                    </td>
+                    </tr>
+                    </table>
+                    </li>
+                </ul>
+              </div>
+            </div>
+            <div class="span3">
+              <h4>Deal Details</h4>
+              <p><%= @deal.description %></p>
+              <%= link_to "Email to Support",left_navigation_index_path %>
+            </div>
+          </div>
+          <hr>
+          <legend><%=@deal.eatery.eatery_name.capitalize%> Details </legend>
+          <div class="container">
+            <div class="span3 ">
+              <%= image_tag(@deal.eatery.image, class: "img-thumbnail")%>
+            </div>
+            <div class="span3 ">
+              Phone: <strong><%= @deal.eatery.eatery_contact%></strong><br><hr>
+              Email: <strong><%= @deal.eatery.eatery_email%></strong><br><hr>
+              Address: <address><%= @deal.eatery.eatery_address%>
+              </address>
+            </div>
+          </div>
+          <hr>
+          <legend> Deal Ratings </legend>
+          <%= review_percentage(@deal)%>
+          <hr>
+          <legend>Customer Comments</legend>
+          <div class="span8 ">
+            <ol>
+              <% @deal.reviews.each do |review| %>
+                <li><%= review.comment %></li>
+                <hr>
+              <% end %>
+            </ol>
+          </div>
+        <% end %>
+      </div>
+   </div>
+  </div>
+</body>

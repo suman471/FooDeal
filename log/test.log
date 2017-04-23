@@ -1,0 +1,102 @@
+  [1m[36m (27.1ms)[0m  [1mDROP DATABASE IF EXISTS `desi_deals_test`[0m
+  [1m[35m (0.6ms)[0m  CREATE DATABASE `desi_deals_test` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`
+  [1m[36m (35.7ms)[0m  [1mCREATE TABLE `deals` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rank` int(11), `name` varchar(255), `description` varchar(255), `current_amount` decimal(8,2), `previous_amount` decimal(8,2), `expiry` datetime, `available_coupons` int(11), `eatery_id` int(11), `created_at` datetime, `updated_at` datetime, `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `sold_coupons` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (20.3ms)[0m  CREATE INDEX `index_deals_on_eatery_id` USING btree ON `deals` (`eatery_id`) 
+  [1m[36m (17.7ms)[0m  [1mCREATE INDEX `index_deals_on_rank` USING btree ON `deals` (`rank`) [0m
+  [1m[35m (12.5ms)[0m  CREATE TABLE `eateries` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `eatery_name` varchar(255), `eatery_description` varchar(255), `eatery_contact` varchar(255), `eatery_email` varchar(255), `eatery_address` varchar(255), `customer_rating` int(11), `created_at` datetime, `updated_at` datetime, `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `user_id` int(11)) ENGINE=InnoDB
+  [1m[36m (11.5ms)[0m  [1mCREATE TABLE `payments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `deal_id` int(11), `stripe_token` varchar(255), `transaction_status` tinyint(1), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (17.4ms)[0m  CREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime, `updated_at` datetime, `is_vendor` tinyint(1) DEFAULT 0, `is_admin` tinyint(1) DEFAULT 0) ENGINE=InnoDB
+  [1m[36m (13.5ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_email` USING btree ON `users` (`email`) [0m
+  [1m[35m (18.7ms)[0m  CREATE UNIQUE INDEX `index_users_on_reset_password_token` USING btree ON `users` (`reset_password_token`) 
+  [1m[36m (10.7ms)[0m  [1mCREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB[0m
+  [1m[35m (15.5ms)[0m  CREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`) 
+  [1m[36m (0.9ms)[0m  [1mSELECT version FROM `schema_migrations`[0m
+  [1m[35m (1.7ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150908214052')
+  [1m[36m (0.5ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140505211318')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140505214057')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140505220149')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140505220213')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140706215214')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140706223256')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150907194959')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150908050058')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150908211825')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.0ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Migrating to CreateCoupons (20150910194500)
+  [1m[35m (11.5ms)[0m  CREATE TABLE `coupons` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `code` varchar(255), `user_id` int(11), `deal_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mSQL (0.2ms)[0m  INSERT INTO `schema_migrations` (`version`) VALUES ('20150910194500')
+  [1m[36m (0.3ms)[0m  [1mCOMMIT[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+  [1m[36m (9.9ms)[0m  [1mDROP DATABASE IF EXISTS `desi_deals_test`[0m
+  [1m[35m (0.5ms)[0m  CREATE DATABASE `desi_deals_test` DEFAULT CHARACTER SET `utf8` COLLATE `utf8_unicode_ci`
+  [1m[36m (9.3ms)[0m  [1mCREATE TABLE `coupons` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `code` varchar(255), `user_id` int(11), `deal_id` int(11), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB[0m
+  [1m[35m (8.5ms)[0m  CREATE TABLE `deals` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `rank` int(11), `name` varchar(255), `description` varchar(255), `current_amount` decimal(8,2), `previous_amount` decimal(8,2), `expiry` datetime, `available_coupons` int(11), `eatery_id` int(11), `created_at` datetime, `updated_at` datetime, `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `sold_coupons` int(11)) ENGINE=InnoDB
+  [1m[36m (15.7ms)[0m  [1mCREATE INDEX `index_deals_on_eatery_id` USING btree ON `deals` (`eatery_id`) [0m
+  [1m[35m (17.5ms)[0m  CREATE INDEX `index_deals_on_rank` USING btree ON `deals` (`rank`) 
+  [1m[36m (10.7ms)[0m  [1mCREATE TABLE `eateries` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `eatery_name` varchar(255), `eatery_description` varchar(255), `eatery_contact` varchar(255), `eatery_email` varchar(255), `eatery_address` varchar(255), `customer_rating` int(11), `created_at` datetime, `updated_at` datetime, `image_file_name` varchar(255), `image_content_type` varchar(255), `image_file_size` int(11), `image_updated_at` datetime, `user_id` int(11)) ENGINE=InnoDB[0m
+  [1m[35m (9.2ms)[0m  CREATE TABLE `payments` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `user_id` int(11), `deal_id` int(11), `stripe_token` varchar(255), `transaction_status` tinyint(1), `created_at` datetime, `updated_at` datetime) ENGINE=InnoDB
+  [1m[36m (9.7ms)[0m  [1mCREATE TABLE `users` (`id` int(11) DEFAULT NULL auto_increment PRIMARY KEY, `email` varchar(255) DEFAULT '' NOT NULL, `encrypted_password` varchar(255) DEFAULT '' NOT NULL, `reset_password_token` varchar(255), `reset_password_sent_at` datetime, `remember_created_at` datetime, `sign_in_count` int(11) DEFAULT 0 NOT NULL, `current_sign_in_at` datetime, `last_sign_in_at` datetime, `current_sign_in_ip` varchar(255), `last_sign_in_ip` varchar(255), `created_at` datetime, `updated_at` datetime, `is_vendor` tinyint(1) DEFAULT 0, `is_admin` tinyint(1) DEFAULT 0) ENGINE=InnoDB[0m
+  [1m[35m (13.5ms)[0m  CREATE UNIQUE INDEX `index_users_on_email` USING btree ON `users` (`email`) 
+  [1m[36m (14.8ms)[0m  [1mCREATE UNIQUE INDEX `index_users_on_reset_password_token` USING btree ON `users` (`reset_password_token`) [0m
+  [1m[35m (10.7ms)[0m  CREATE TABLE `schema_migrations` (`version` varchar(255) NOT NULL) ENGINE=InnoDB
+  [1m[36m (16.0ms)[0m  [1mCREATE UNIQUE INDEX `unique_schema_migrations` ON `schema_migrations` (`version`) [0m
+  [1m[35m (0.2ms)[0m  SELECT version FROM `schema_migrations`
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150910194500')[0m
+  [1m[35m (0.4ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140505211318')
+  [1m[36m (0.4ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140505214057')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140505220149')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140505220213')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20140706215214')
+  [1m[36m (0.3ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20140706223256')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150907194959')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150908050058')[0m
+  [1m[35m (0.3ms)[0m  INSERT INTO `schema_migrations` (version) VALUES ('20150908211825')
+  [1m[36m (0.2ms)[0m  [1mINSERT INTO `schema_migrations` (version) VALUES ('20150908214052')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.1ms)[0m  SELECT `schema_migrations`.* FROM `schema_migrations`
+  [1m[36mActiveRecord::SchemaMigration Load (0.3ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.3ms)[0m  SELECT @@FOREIGN_KEY_CHECKS
+  [1m[36m (0.1ms)[0m  [1mSET FOREIGN_KEY_CHECKS = 0[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36mFixture Delete (1.1ms)[0m  [1mDELETE FROM `coupons`[0m
+  [1m[35mFixture Insert (0.8ms)[0m  INSERT INTO `coupons` (`code`, `user_id`, `deal_id`, `created_at`, `updated_at`, `id`) VALUES ('MyString', 1, 1, '2015-09-10 22:01:15', '2015-09-10 22:01:15', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO `coupons` (`code`, `user_id`, `deal_id`, `created_at`, `updated_at`, `id`) VALUES ('MyString', 1, 1, '2015-09-10 22:01:15', '2015-09-10 22:01:15', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM `deals`
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO `deals` (`id`, `rank`, `name`, `description`, `current_amount`, `previous_amount`, `discount`, `expiry`, `coupon_code`, `available_coupons`, `sold_coupons`, `rid`, `created_at`, `updated_at`) VALUES (NULL, 1, 'MyString', 'MyString', NULL, NULL, NULL, '2014-05-05 14:13:18', 'MyString', 1, 1, 1, '2014-05-05 14:13:18', '2014-05-05 14:13:18')[0m
+Mysql2::Error: Unknown column 'discount' in 'field list': INSERT INTO `deals` (`id`, `rank`, `name`, `description`, `current_amount`, `previous_amount`, `discount`, `expiry`, `coupon_code`, `available_coupons`, `sold_coupons`, `rid`, `created_at`, `updated_at`) VALUES (NULL, 1, 'MyString', 'MyString', NULL, NULL, NULL, '2014-05-05 14:13:18', 'MyString', 1, 1, 1, '2014-05-05 14:13:18', '2014-05-05 14:13:18')
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mSET FOREIGN_KEY_CHECKS = 1[0m
+  [1m[35m (0.1ms)[0m  SELECT @@FOREIGN_KEY_CHECKS
+  [1m[36m (0.1ms)[0m  [1mSET FOREIGN_KEY_CHECKS = 0[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (0.2ms)[0m  [1mDELETE FROM `coupons`[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO `coupons` (`code`, `user_id`, `deal_id`, `created_at`, `updated_at`, `id`) VALUES ('MyString', 1, 1, '2015-09-10 22:01:15', '2015-09-10 22:01:15', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO `coupons` (`code`, `user_id`, `deal_id`, `created_at`, `updated_at`, `id`) VALUES ('MyString', 1, 1, '2015-09-10 22:01:15', '2015-09-10 22:01:15', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM `deals`
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO `deals` (`id`, `rank`, `name`, `description`, `current_amount`, `previous_amount`, `discount`, `expiry`, `coupon_code`, `available_coupons`, `sold_coupons`, `rid`, `created_at`, `updated_at`) VALUES (NULL, 1, 'MyString', 'MyString', NULL, NULL, NULL, '2014-05-05 14:13:18', 'MyString', 1, 1, 1, '2014-05-05 14:13:18', '2014-05-05 14:13:18')[0m
+Mysql2::Error: Unknown column 'discount' in 'field list': INSERT INTO `deals` (`id`, `rank`, `name`, `description`, `current_amount`, `previous_amount`, `discount`, `expiry`, `coupon_code`, `available_coupons`, `sold_coupons`, `rid`, `created_at`, `updated_at`) VALUES (NULL, 1, 'MyString', 'MyString', NULL, NULL, NULL, '2014-05-05 14:13:18', 'MyString', 1, 1, 1, '2014-05-05 14:13:18', '2014-05-05 14:13:18')
+  [1m[35m (0.3ms)[0m  ROLLBACK
+  [1m[36m (0.1ms)[0m  [1mSET FOREIGN_KEY_CHECKS = 1[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.2ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.1ms)[0m  BEGIN
+  [1m[36m (0.1ms)[0m  [1mROLLBACK[0m

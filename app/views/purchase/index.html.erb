@@ -1,0 +1,33 @@
+<% if @payments.present? %>
+
+  <table class="table table-striped">
+    <tr>
+      <th>Deal Name</th>
+      <th>Date Purchased</th>
+      <th>Amount</th>
+      <th>Coupon Code </th>
+      <th>Write a Review</th>
+    </tr>
+    <% @payments.each do |payment| %>
+      <tr>
+        <td> <%= payment.deal.name %></td>
+        <td><%= payment.updated_at.to_formatted_s(:long) %></td>
+        <td><%= payment.deal.current_amount %></td>
+        <td><%= payment.coupon.code%> </td>
+        <% if user_reviewed?(payment.deal) %>
+          <td>Feedback provided </td>
+        <% else %>
+          <td><%= link_to "Review", new_purchase_review_path(purchase_id: payment.coupon.id)%>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <div class="panel panel-warning">
+    <div class="panel-body">
+      Payments
+    </div>
+    <div class="panel-footer">No payments found</div>
+  </div>
+<% end %>

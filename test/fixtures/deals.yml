@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id:
+  rank: 1
+  name: MyString
+  description: MyString
+  current_amount:
+  previous_amount:
+  expiry: 2014-05-05 14:13:18
+  available_coupons: 1
+  sold_coupons: 1
+  rid: 1
+  created_at: 2014-05-05 14:13:18
+  updated_at: 2014-05-05 14:13:18
+
+two:
+  id:
+  rank: 1
+  name: MyString
+  description: MyString
+  current_amount:
+  previous_amount:
+  expiry: 2014-05-05 14:13:18
+  available_coupons: 1
+  sold_coupons: 1
+  rid: 1
+  created_at: 2014-05-05 14:13:18
+  updated_at: 2014-05-05 14:13:18
